@@ -432,6 +432,12 @@ h1,h2,h3,h4,h5,h6 {
 .hero__slider-btn--prev { left: 1.5rem; }
 .hero__slider-btn--next { right: 1.5rem; }
 
+@media (max-width: 768px) {
+  .hero__slider-btn {
+    display: none;
+  }
+}
+
 /* Dots */
 .hero__slider-dots {
   position: absolute;
@@ -1681,4 +1687,19 @@ h1,h2,h3,h4,h5,h6 {
   .values-grid   { grid-template-columns:1fr; }
   .team-grid     { grid-template-columns:1fr; }
   .projects-grid { grid-template-columns:1fr; }
+}
+
+@media (max-width: 768px) {
+  .allies-slider-container {
+    padding: 1.5rem 0;
+  }
+  .ally-card {
+    min-height: 80px;
+    width: 150px;
+    padding: var(--space-xs);
+  }
+  .ally-card__logo {
+    max-height: 50px;
+    max-width: 100px;
+  }
 }
