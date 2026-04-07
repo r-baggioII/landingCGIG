@@ -1,0 +1,291 @@
+/* ============================================
+   CGIC — Proyectos Grid Vertical
+   ============================================ */
+
+/* ---------- Section ---------- */
+.sliders-section {
+  background: var(--color-bg);
+  padding: var(--space-xl) 0 var(--space-2xl);
+}
+
+/* ---------- Eje Block ---------- */
+.eje-block {
+  padding: var(--space-xl) 0;
+  /* Espacio generoso de separación */
+}
+
+/* ---------- Eje Header ---------- */
+.eje-block__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: var(--space-lg);
+}
+
+.eje-block__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.eje-block__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--color-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(234, 88, 48, 0.25);
+}
+
+.eje-block__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.eje-block__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--color-title);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.eje-block__desc {
+  font-size: 1.05rem;
+  color: var(--color-text);
+  opacity: 0.8;
+  max-width: 600px;
+  margin-top: 0.2rem;
+  margin-left: calc(48px + var(--space-sm)); /* Align with text */
+}
+
+/* ---------- Eje Divider ---------- */
+.eje-divider {
+  border: none;
+  height: 1px;
+  background: var(--color-bg-sub);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- Timeline de Proyectos ---------- */
+.timeline-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-xl);
+  position: relative;
+  padding: var(--space-2xl) var(--space-md) var(--space-lg);
+  
+  /* Truco para extender el contenedor hasta el borde derecho de la pantalla */
+  margin-right: calc(-50vw + 50%);
+  padding-right: calc(50vw - 50% + var(--space-xl));
+  
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar for cleaner look */
+  -ms-overflow-style: none;
+}
+.timeline-row::-webkit-scrollbar {
+  display: none;
+}
+
+.timeline-track {
+  position: absolute;
+  top: calc(50% + 10px); /* Ajustado por el padding desigual */
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, var(--color-orange), #0a0e1a);
+  transform: translateY(-50%);
+  z-index: 0;
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+.timeline-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  min-width: 340px;
+  max-width: 400px;
+  height: 260px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+  flex-shrink: 0;
+  cursor: pointer;
+  overflow: hidden; /* Ensure hover text doesn't overflow */
+}
+
+.timeline-card.bg-orange {
+  background: var(--color-orange);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.timeline-card.bg-blue {
+  background: #0a0e1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Texto Oculto que aparece en hover */
+.timeline-card__info {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: inherit; /* Mantiene el color de fondo */
+  color: var(--color-white);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 5;
+  border-radius: var(--radius-lg);
+}
+
+.timeline-card:hover .timeline-card__info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-card__title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.03em;
+}
+
+.timeline-card.bg-blue:hover .timeline-card__title {
+  color: var(--color-orange);
+}
+
+.timeline-card__desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+
+
+.timeline-card__status {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--color-white);
+  padding: 0.3rem 1.2rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 12px rgba(4, 9, 24, 0.15);
+  white-space: nowrap;
+}
+
+.timeline-card.bg-orange .timeline-card__status {
+  color: var(--color-orange);
+}
+
+.timeline-card.bg-blue .timeline-card__status {
+  color: #0a0e1a;
+}
+
+.timeline-card__status .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.timeline-card.bg-orange .timeline-card__status .dot {
+  background: var(--color-orange);
+}
+.timeline-card.bg-blue .timeline-card__status .dot {
+  background: #0a0e1a;
+}
+
+.timeline-card__status .vivo-dot {
+  animation: badgeDotPulse 1.5s ease-in-out infinite;
+}
+
+.timeline-card__img {
+  max-height: 160px;
+  max-width: 90%;
+  object-fit: contain;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 3;
+}
+
+.timeline-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 16px 40px rgba(4, 9, 24, 0.2);
+  z-index: 12;
+}
+
+.timeline-card:hover .timeline-card__img {
+  transform: scale(1.1);
+  opacity: 0.08; /* Efecto marca de agua */
+}
+
+/* ---------- Scroll Animations ---------- */
+.eje-anim {
+  opacity: 0;
+  transform: translateY(24px);
+  will-change: opacity, transform;
+}
+
+/* Clases agregadas por JS */
+.eje-anim-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+
+
+@media (max-width: 992px) {
+  .eje-block__desc {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline-row {
+    gap: var(--space-lg);
+    padding: var(--space-xl) 0 var(--space-md);
+  }
+  
+  .timeline-card {
+    min-width: 300px;
+    height: 220px;
+    padding: var(--space-md);
+  }
+  
+  .timeline-card__img {
+    max-height: 120px;
+  }
+  
+  .eje-block {
+    padding: var(--space-lg) 0;
+  }
+}
