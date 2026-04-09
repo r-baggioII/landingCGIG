@@ -194,36 +194,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Pausa al hover sobre el slider
     const sliderEl = document.getElementById('hero-slider');
+    const touchSurface = document.getElementById('hero') || sliderEl;
     sliderEl?.addEventListener('mouseenter', pause);
     sliderEl?.addEventListener('mouseleave', start);
 
-    // Swipe táctil robusto para mobile
+    // Swipe táctil con bloqueo por eje para evitar arrastrar la página
     let touchStartX = 0;
     let touchStartY = 0;
     let touchEndX = 0;
     let touchEndY = 0;
+    let touchAxis = null;
 
-    sliderEl?.addEventListener('touchstart', e => {
+    touchSurface?.addEventListener('touchstart', e => {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
       touchEndX = touchStartX;
       touchEndY = touchStartY;
+      touchAxis = null;
     }, { passive: true });
 
-    sliderEl?.addEventListener('touchmove', e => {
+    touchSurface?.addEventListener('touchmove', e => {
       touchEndX = e.touches[0].clientX;
       touchEndY = e.touches[0].clientY;
-    }, { passive: true });
 
-    sliderEl?.addEventListener('touchend', () => {
       const dx = touchEndX - touchStartX;
       const dy = touchEndY - touchStartY;
-      const isHorizontalSwipe = Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy);
+
+      // Define el eje del gesto cuando supera una distancia mínima
+      if (!touchAxis && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) {
+        touchAxis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+      }
+
+      // Si el gesto es horizontal, evitamos que la página se desplace
+      if (touchAxis === 'x') {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    touchSurface?.addEventListener('touchend', () => {
+      const dx = touchEndX - touchStartX;
+      const dy = touchEndY - touchStartY;
+      const isHorizontalSwipe = touchAxis === 'x' && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy);
 
       if (isHorizontalSwipe) {
         goTo(dx < 0 ? current + 1 : current - 1);
         start();
       }
+
+      touchAxis = null;
     }, { passive: true });
 
     start();
