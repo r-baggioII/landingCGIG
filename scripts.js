@@ -192,5 +192,38 @@ document.addEventListener('DOMContentLoaded', () => {
     start();
   }
 
+  // ── Lightbox ──
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.querySelector('.lightbox__close');
+
+  if (lightbox && lightboxImg) {
+    document.querySelectorAll('.timeline__gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        lightbox.classList.add('show');
+        lightboxImg.src = img.src;
+      });
+    });
+
+    lightboxClose?.addEventListener('click', () => {
+      lightbox.classList.remove('show');
+      setTimeout(() => { lightboxImg.src = ''; }, 300); // clear after animation
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target !== lightboxImg) {
+        lightbox.classList.remove('show');
+        setTimeout(() => { lightboxImg.src = ''; }, 300);
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('show')) {
+        lightbox.classList.remove('show');
+        setTimeout(() => { lightboxImg.src = ''; }, 300);
+      }
+    });
+  }
+
 });
 

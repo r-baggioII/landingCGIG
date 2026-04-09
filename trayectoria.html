@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trayectoria — CGIC</title>
+  <title>Historia — CGIC</title>
   <meta name="description" content="Antecedentes, informes y reconocimientos del Centro de Gestión Integral de Crisis.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,8 +22,8 @@
       <div class="navbar__links" id="nav-links">
         <a href="index.html" class="navbar__link">Inicio</a>
         <a href="proyectos.html" class="navbar__link">Proyectos</a>
-        <a href="equipo.html" class="navbar__link">Equipo y aliados</a>
-        <a href="trayectoria.html" class="navbar__link navbar__link--active">Trayectoria</a>
+        <a href="equipo.html" class="navbar__link">Equipo</a>
+        <a href="trayectoria.html" class="navbar__link navbar__link--active">Historia</a>
         <a href="index.html#contacto" class="btn btn--primary btn--sm navbar__cta">Sumate</a>
       </div>
       <button class="navbar__toggle" id="nav-toggle" aria-label="Menú"><span></span><span></span><span></span></button>
@@ -36,86 +36,105 @@
       <div class="breadcrumb">
         <a href="index.html">Inicio</a>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-        <span>Trayectoria</span>
+        <span>Historia</span>
       </div>
-      <h1>Nuestra <span class="accent">trayectoria</span></h1>
+      <h1>Nuestra <span class="accent">historia</span></h1>
       <p>Antecedentes, reconocimientos e informes que documentan nuestro camino.</p>
     </div>
   </section>
 
-  <!-- ANTECEDENTES 2025 -->
-  <section class="section--compact">
+  <!-- HISTORIA TIMELINE -->
+  <section class="section--compact timeline-section">
     <div class="container">
-      <div class="reveal" style="margin-bottom:var(--space-md)">
-        <span class="section-label">Reconocimientos</span>
-        <h2 class="section-title">Antecedentes <span class="accent">2025</span></h2>
+      <div class="reveal" style="margin-bottom:var(--space-xl); text-align: left;">
+        <span class="section-label">Nuestro Camino</span>
+        <h2 class="section-title">Historia</h2>
       </div>
 
-      <div class="achievements-list stagger-children">
-        <div class="achievement">
-          <div class="achievement__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+      <div class="timeline">
+        <div class="timeline__line"></div>
+        
+        <!-- Event 1 -->
+        <div class="timeline__item reveal">
+          <div class="timeline__dot"></div>
+          <div class="timeline__content timeline__content--left">
+            <span class="timeline__date">Mayo 2025</span>
+            <h4 class="timeline__title">Foro Humanitario y de Derechos Humanos - Los Ángeles</h4>
+            <p class="timeline__text">Participación en el panel “Generación Emergente”, donde Ana Giménez Pozzoli compartió la experiencia que dio origen a CGIC. Evento organizado por Aurora Humanitarian Initiative y UCLA.</p>
           </div>
-          <div class=\"achievement__content\">
-            <h4 class=\"achievement__title\">Mención al Compromiso Ambiental</h4>
-            <p class="achievement__text">Reconocimiento en la XXIII edición, categoría "Jóvenes por el Clima", otorgado por la Universidad de Congreso bajo el lema "Por el cuidado de la Casa Común".</p>
-          </div>
-        </div>
-
-        <div class="achievement">
-          <div class="achievement__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <div class=\"achievement__content\">
-            <h4 class=\"achievement__title\">Fondo de Acción Climática — Hub de Innovación</h4>
-            <p class="achievement__text">En articulación con Fundación Lupa, proyecto orientado a hábitat y espacios seguros, con financiamiento de la Municipalidad de Luján de Cuyo y Bloomberg Philanthropy.</p>
+          <div class="timeline__gallery">
+            <img src="images/Fotos Historia-20260408T223130Z-3-001/Fotos Historia/Foro Los Angeles1.3.JPG" alt="Evento 1.3">
           </div>
         </div>
 
-        <div class="achievement">
-          <div class="achievement__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <!-- Event 2 -->
+        <div class="timeline__item reveal">
+          <div class="timeline__dot"></div>
+          <div class="timeline__content timeline__content--right">
+            <span class="timeline__date">Junio 2025</span>
+            <h4 class="timeline__title">Mención al Compromiso Ambiental</h4>
+            <p class="timeline__text">Reconocimiento en la XXIII edición, en la categoría “Jóvenes por el Clima”, otorgado por la Universidad de Congreso bajo el lema “Por el cuidado de la Casa Común”.</p>
           </div>
-          <div class=\"achievement__content\">
-            <h4 class=\"achievement__title\">Fondo de Acción Climática — Sistema de Alerta Temprana</h4>
-            <p class="achievement__text">Junto a Oikos Red Ambiental, desarrollo de un sistema enfocado en la gestión de riesgos climáticos dentro del programa de Sistemas para la Gestión.</p>
-          </div>
-        </div>
-
-        <div class="achievement">
-          <div class="achievement__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <div class=\"achievement__content\">
-            <h4 class=\"achievement__title\">Foro Humanitario — Los Ángeles</h4>
-            <p class="achievement__text">Participación en el panel "Generación Emergente", organizado por Aurora Humanitarian Initiative y UCLA. Ana Giménez Pozzoli compartió la experiencia que dio origen a CGIC.</p>
+          <div class="timeline__gallery">
+            <img src="images/Fotos Historia-20260408T223130Z-3-001/Fotos Historia/Mencion compromiso ambiental2.jpg" alt="Evento 2">
           </div>
         </div>
 
-        <div class="achievement">
-          <div class="achievement__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <!-- Event 3 -->
+        <div class="timeline__item reveal">
+          <div class="timeline__dot"></div>
+          <div class="timeline__content timeline__content--left">
+            <span class="timeline__date">Junio 2025</span>
+            <h4 class="timeline__title">Fondo de Acción Climática - Hub de Innovación Climática y Hábitat</h4>
+            <p class="timeline__text">En articulación con Fundación Lupa, implementación de un proyecto orientado a hábitat y espacios seguros, con financiamiento de la Municipalidad de Luján de Cuyo y Bloomberg Philanthropy.</p>
           </div>
-          <div class=\"achievement__content\">
-            <h4 class=\"achievement__title\">Emprende U — Edición XII</h4>
-            <p class="achievement__text">Semifinalistas entre 416 proyectos a nivel nacional, uno de los 5 seleccionados de Mendoza para el Bootcamp en Córdoba.</p>
+          <div class="timeline__gallery">
+            <img src="images/Fotos Historia-20260408T223130Z-3-001/Fotos Historia/Fondo acción climática HUB C y H3.jpg" alt="Evento 3">
           </div>
         </div>
 
-        <div class="achievement">
-          <div class="achievement__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <!-- Event 4 -->
+        <div class="timeline__item reveal">
+          <div class="timeline__dot"></div>
+          <div class="timeline__content timeline__content--right">
+            <span class="timeline__date">Junio 2025</span>
+            <h4 class="timeline__title">Fondo de Acción Climática - Sistema de Alerta Temprana</h4>
+            <p class="timeline__text">Junto a Asociación Civil Oikos Red Ambiental, desarrollo de un sistema enfocado en la gestión de riesgos climáticos dentro del programa de Sistemas para la Gestión.</p>
           </div>
-          <div class=\"achievement__content\">
-            <h4 class=\"achievement__title\">Vendimia Tech 2025</h4>
-            <p class="achievement__text">Tercer puesto entre 16 proyectos con "Acción del Sur Blockchain", solución para la trazabilidad de donaciones en emergencias.</p>
+          <div class="timeline__gallery">
+            <img src="images/Fotos Historia-20260408T223130Z-3-001/Fotos Historia/Fondo acción climática GPI4.jpg" alt="Evento 4">
           </div>
         </div>
+
+        <!-- Event 5 -->
+        <div class="timeline__item reveal">
+          <div class="timeline__dot"></div>
+          <div class="timeline__content timeline__content--left">
+            <span class="timeline__date">Septiembre 2025</span>
+            <h4 class="timeline__title">Emprende U – Edición XII</h4>
+            <p class="timeline__text">Semifinalistas entre 416 proyectos a nivel nacional, siendo uno de los 5 seleccionados de Mendoza para participar del Bootcamp en Córdoba.</p>
+          </div>
+          <div class="timeline__gallery">
+            <img src="images/Fotos Historia-20260408T223130Z-3-001/Fotos Historia/Emprende U.jpg" alt="Evento 5">
+          </div>
+        </div>
+
+        <!-- Event 6 -->
+        <div class="timeline__item reveal">
+          <div class="timeline__dot"></div>
+          <div class="timeline__content timeline__content--right">
+            <span class="timeline__date">Marzo 2026</span>
+            <h4 class="timeline__title">Vendimia Tech 2025</h4>
+            <p class="timeline__text">Tercer puesto entre 16 proyectos con “Acción del Sur Blockchain”, una solución para la trazabilidad de donaciones en contextos de emergencia.</p>
+          </div>
+          <div class="timeline__gallery">
+            <img src="images/Fotos Historia-20260408T223130Z-3-001/Fotos Historia/Vendimia tec6.jpg" alt="Evento 6.1">
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
-
-
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -131,7 +150,7 @@
             <a href="index.html" class="footer__link">Inicio</a>
             <a href="proyectos.html" class="footer__link">Proyectos</a>
             <a href="equipo.html" class="footer__link">Equipo y aliados</a>
-            <a href="trayectoria.html" class="footer__link">Trayectoria</a>
+            <a href="trayectoria.html" class="footer__link">Historia</a>
           </div>
         </div>
         <div>
@@ -154,6 +173,13 @@
   </footer>
 
   <button class="back-to-top" id="back-to-top" aria-label="Volver arriba"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox__close">&times;</span>
+    <img class="lightbox__content" id="lightbox-img" alt="Vista ampliada">
+  </div>
+
   <script src="scripts.js"></script>
 </body>
 </html>
