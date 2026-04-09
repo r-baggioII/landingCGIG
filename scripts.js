@@ -113,6 +113,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   btt?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+  // ── WhatsApp floating button ──
+  if (!document.querySelector('.whatsapp-float')) {
+    const waBtn = document.createElement('a');
+    waBtn.className = 'whatsapp-float';
+    waBtn.href = 'https://wa.me/5492616327027';
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener';
+    waBtn.setAttribute('aria-label', 'Abrir WhatsApp');
+    waBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.48 0 .12 5.36.12 11.94c0 2.1.55 4.15 1.6 5.96L0 24l6.27-1.64a11.9 11.9 0 0 0 5.79 1.48h.01c6.58 0 11.94-5.36 11.94-11.94 0-3.19-1.24-6.19-3.49-8.42zm-8.46 18.32h-.01a9.9 9.9 0 0 1-5.05-1.39l-.36-.21-3.72.97 1-3.62-.23-.37a9.9 9.9 0 0 1-1.52-5.27c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7.01 2.91a9.86 9.86 0 0 1 2.9 7.01c0 5.47-4.45 9.92-9.92 9.92zm5.44-7.43c-.3-.15-1.78-.88-2.06-.98-.27-.1-.46-.15-.66.15-.19.3-.76.98-.93 1.18-.17.2-.34.22-.63.07-.3-.15-1.25-.46-2.38-1.46-.88-.78-1.47-1.74-1.64-2.04-.17-.3-.02-.46.12-.61.13-.13.3-.34.44-.51.15-.17.2-.29.3-.49.1-.2.05-.37-.02-.52-.08-.15-.66-1.59-.9-2.18-.24-.57-.48-.49-.66-.5h-.56c-.2 0-.52.08-.79.37-.27.3-1.03 1-1.03 2.45s1.05 2.85 1.19 3.05c.15.2 2.06 3.15 4.99 4.41.7.3 1.25.48 1.68.61.7.22 1.34.19 1.84.12.56-.08 1.78-.73 2.03-1.44.25-.71.25-1.32.17-1.44-.07-.12-.27-.2-.56-.34z"/>
+      </svg>
+    `;
+    document.body.appendChild(waBtn);
+  }
+
   // ── Hero parallax (index only) ──
   const mesh = document.querySelector('.hero__mesh');
   if (mesh) {
@@ -181,12 +197,33 @@ document.addEventListener('DOMContentLoaded', () => {
     sliderEl?.addEventListener('mouseenter', pause);
     sliderEl?.addEventListener('mouseleave', start);
 
-    // Swipe táctil
-    let touchX = 0;
-    sliderEl?.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-    sliderEl?.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - touchX;
-      if (Math.abs(dx) > 50) { goTo(dx < 0 ? current + 1 : current - 1); start(); }
+    // Swipe táctil robusto para mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    sliderEl?.addEventListener('touchstart', e => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchEndX = touchStartX;
+      touchEndY = touchStartY;
+    }, { passive: true });
+
+    sliderEl?.addEventListener('touchmove', e => {
+      touchEndX = e.touches[0].clientX;
+      touchEndY = e.touches[0].clientY;
+    }, { passive: true });
+
+    sliderEl?.addEventListener('touchend', () => {
+      const dx = touchEndX - touchStartX;
+      const dy = touchEndY - touchStartY;
+      const isHorizontalSwipe = Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy);
+
+      if (isHorizontalSwipe) {
+        goTo(dx < 0 ? current + 1 : current - 1);
+        start();
+      }
     }, { passive: true });
 
     start();
