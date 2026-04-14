@@ -1342,6 +1342,10 @@ h1,h2,h3,h4,h5,h6 {
   gap:var(--space-sm);
 }
 
+.team-grid--two-cols {
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+}
+
 .team-card {
   display:flex;
   align-items:center;
