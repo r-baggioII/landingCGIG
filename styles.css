@@ -44,6 +44,8 @@ html {
   scroll-behavior: smooth;
   font-size: 18px;          /* ← LARGER base */
   scroll-padding-top: 80px;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 body {
@@ -52,6 +54,8 @@ body {
   background: var(--color-bg);
   line-height: 1.75;
   overflow-x: hidden;
+  max-width: 100%;
+  overscroll-behavior-x: none;
   -webkit-font-smoothing: antialiased;
 }
 

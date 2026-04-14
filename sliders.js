@@ -40,37 +40,80 @@ document.addEventListener('DOMContentLoaded', () => {
   const pmDesc = document.getElementById('pm-desc');
   const pmImg1 = document.getElementById('pm-img1');
   const pmImg2 = document.getElementById('pm-img2');
+  const pmImages = document.getElementById('pm-images');
   const cards = document.querySelectorAll('.timeline-card');
   let activeImageLoadToken = 0;
 
   function clearModalImage(imgEl) {
     if (!imgEl) return;
     imgEl.style.display = 'none';
-    imgEl.src = '';
+    imgEl.removeAttribute('src');
+    imgEl.removeAttribute('srcset');
   }
 
   function loadModalImage(imgEl, src, token) {
-    if (!imgEl || !src) {
+    return new Promise(resolve => {
+      if (!imgEl || !src) {
+        clearModalImage(imgEl);
+        resolve(false);
+        return;
+      }
+
+      // Reinicia el elemento para evitar arrastre visual de una imagen previa.
       clearModalImage(imgEl);
-      return;
-    }
 
-    // Oculta la imagen actual mientras la nueva termina de cargar.
-    imgEl.style.display = 'none';
+      const preloader = new Image();
+      preloader.decoding = 'async';
 
-    const preloader = new Image();
-    preloader.onload = () => {
-      if (token !== activeImageLoadToken) return;
-      imgEl.src = src;
-      imgEl.style.display = 'block';
-    };
+      preloader.onload = () => {
+        if (token !== activeImageLoadToken) {
+          resolve(false);
+          return;
+        }
+        imgEl.src = src;
+        imgEl.style.display = 'block';
+        resolve(true);
+      };
 
-    preloader.onerror = () => {
-      if (token !== activeImageLoadToken) return;
-      clearModalImage(imgEl);
-    };
+      preloader.onerror = () => {
+        if (token !== activeImageLoadToken) {
+          resolve(false);
+          return;
+        }
+        clearModalImage(imgEl);
+        resolve(false);
+      };
 
-    preloader.src = src;
+      preloader.src = src;
+    });
+  }
+
+  function setModalLoading(isLoading) {
+    if (!pmImages) return;
+    pmImages.classList.toggle('is-loading', isLoading);
+  }
+
+  // Precarga en segundo plano para que la apertura del modal sea más rápida.
+  const warmupModalImages = () => {
+    const uniqueSources = new Set();
+    cards.forEach(card => {
+      const src1 = card.getAttribute('data-img1');
+      const src2 = card.getAttribute('data-img2');
+      if (src1) uniqueSources.add(src1);
+      if (src2) uniqueSources.add(src2);
+    });
+
+    uniqueSources.forEach(src => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.src = src;
+    });
+  };
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(warmupModalImages, { timeout: 1500 });
+  } else {
+    setTimeout(warmupModalImages, 600);
   }
 
   if (modalOverlay) {
@@ -87,6 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const img2Src = card.getAttribute('data-img2');
         activeImageLoadToken += 1;
         const currentToken = activeImageLoadToken;
+
+        // Resetea siempre las imágenes antes de iniciar una nueva carga.
+        clearModalImage(pmImg1);
+        clearModalImage(pmImg2);
+        setModalLoading(true);
 
         // Reset visual overrides before applying project-specific adjustments
         pmImg1.style.objectFit = 'cover';
@@ -118,8 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
           pmImg2.style.backgroundColor = 'rgba(10, 14, 26, 0.35)';
         }
         
-        loadModalImage(pmImg1, img1Src, currentToken);
-        loadModalImage(pmImg2, img2Src, currentToken);
+        Promise.all([
+          loadModalImage(pmImg1, img1Src, currentToken),
+          loadModalImage(pmImg2, img2Src, currentToken)
+        ]).finally(() => {
+          if (currentToken !== activeImageLoadToken) return;
+          setModalLoading(false);
+        });
         
         modalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -130,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       activeImageLoadToken += 1;
       modalOverlay.classList.remove('active');
       document.body.style.overflow = '';
+      setModalLoading(false);
       clearModalImage(pmImg1);
       clearModalImage(pmImg2);
     };
