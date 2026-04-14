@@ -273,9 +273,9 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .navbar__logo-img {
-  height: 140px;
+  height: 160px;
   width: auto;
-  max-width: 500px;
+  max-width: 560px;
   object-fit: contain;
   display: block;
   transition: opacity var(--t-fast);
@@ -302,7 +302,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .navbar__link {
   font-family: var(--font-body);
-  font-size: 0.82rem;
+  font-size: 0.98rem;
   font-weight: 500;
   color: var(--color-white);
   position: relative;
@@ -834,7 +834,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .phase__icon {
-  width:56px; height:56px;
+  width:64px; height:64px;
   border-radius:50%;
   background:var(--color-orange);
   display:flex;
@@ -845,15 +845,19 @@ h1,h2,h3,h4,h5,h6 {
   box-shadow:var(--shadow-orange);
   transition:transform var(--t-base);
 }
+.phase__icon svg {
+  width: 28px;
+  height: 28px;
+}
 .phase:hover .phase__icon { transform:scale(1.1); }
 
 .phase__title {
   font-family:var(--font-heading);
-  font-size:1.5rem;
+  font-size:1.7rem;
   color:var(--color-title);
   margin-bottom: 0.2rem;
 }
-.phase__subtitle { font-size:.88rem; font-style:italic; }
+.phase__subtitle { font-size:1rem; font-style:italic; }
 
 .phase:not(:last-child)::after {
   content:'';
@@ -1650,7 +1654,7 @@ h1,h2,h3,h4,h5,h6 {
 .reports-row {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(240px, 320px);
+  grid-auto-columns: 300px;
   gap: var(--space-sm);
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -1659,6 +1663,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .reports-row .image-card {
+  width: 300px;
   height: 240px;
   scroll-snap-align: start;
   border: 1px solid rgba(19, 33, 67, 0.18);
@@ -1801,7 +1806,7 @@ h1,h2,h3,h4,h5,h6 {
   .contact-grid       { grid-template-columns: repeat(2, 1fr); }
   .values-grid        { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .value-card         { min-height: 300px; }
-  .navbar__logo-img   { height: 92px; max-width: 300px; }
+  .navbar__logo-img   { height: 108px; max-width: 340px; }
 }
 
 @media (max-width:768px) {
@@ -1826,7 +1831,7 @@ h1,h2,h3,h4,h5,h6 {
   }
   .navbar__links .navbar__link {
     color: var(--color-title);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
   }
   .navbar__links .navbar__link--active {
     color: var(--color-orange);
@@ -1838,7 +1843,7 @@ h1,h2,h3,h4,h5,h6 {
   .navbar__links.active { right:0; }
   .navbar__toggle { display:flex !important; }
   .navbar__cta { margin-left:0; }
-  .navbar__logo-img { height: 72px; max-width: 220px; }
+  .navbar__logo-img { height: 82px; max-width: 250px; }
 
   .stats-row                 { grid-template-columns:1fr; }
   .approach__phases           { grid-template-columns:1fr; }
@@ -1848,7 +1853,8 @@ h1,h2,h3,h4,h5,h6 {
   .footer__inner              { grid-template-columns:1fr; }
   .footer__bottom             { flex-direction:column; gap:var(--space-xs); text-align:center; }
   .images-grid                { grid-template-columns:1fr; }
-  .reports-row                { grid-auto-columns:minmax(230px, 82vw); }
+  .reports-row                { grid-auto-columns:82vw; }
+  .reports-row .image-card    { width:82vw; max-width:320px; height:220px; }
   .image-card                 { height:220px; }
   .contact-grid               { grid-template-columns:1fr; }
   .achievement                { grid-template-columns:1fr; }
@@ -1878,7 +1884,7 @@ h1,h2,h3,h4,h5,h6 {
   .team-grid     { grid-template-columns:1fr; }
   .projects-grid { grid-template-columns:1fr; }
   .values-grid   { grid-template-columns:1fr; }
-  .navbar__logo-img { height: 60px; max-width: 180px; }
+  .navbar__logo-img { height: 68px; max-width: 200px; }
   .hero { min-height: 86vh; }
   .hero__content { padding-top: 1rem; }
   .timeline__gallery img {
@@ -1914,7 +1920,7 @@ h1,h2,h3,h4,h5,h6 {
     width: 78%;
     padding: 4.5rem 1.25rem 1.5rem;
   }
-  .navbar__logo-img { height: 56px; max-width: 165px; }
+  .navbar__logo-img { height: 63px; max-width: 185px; }
   .hero__title { font-size: clamp(1.95rem, 10vw, 2.5rem); }
   .hero__tagline { font-size: 1.05rem; }
   .hero__subtitle { font-size: 0.9rem; line-height: 1.6; }
@@ -1926,7 +1932,7 @@ h1,h2,h3,h4,h5,h6 {
 @media (max-width:360px) {
   html { font-size: 15px; }
   .container { padding: 0 0.85rem; }
-  .navbar__logo-img { height: 52px; max-width: 150px; }
+  .navbar__logo-img { height: 58px; max-width: 170px; }
   .navbar__links {
     width: 82%;
     padding: 4.25rem 1rem 1.4rem;

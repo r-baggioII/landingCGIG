@@ -270,19 +270,27 @@
   position: absolute;
   top: var(--space-md);
   right: var(--space-md);
-  background: none;
-  border: none;
-  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(19, 33, 67, 0.2);
+  color: var(--color-title);
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  box-shadow: 0 6px 14px rgba(4, 9, 24, 0.18);
+  z-index: 2;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 .project-modal__close:hover {
-  background: rgba(255,255,255,0.1);
+  background: var(--color-orange);
+  color: var(--color-white);
+  transform: scale(1.06);
+}
+.project-modal__close:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 2px;
 }
 .project-modal__content {
   display: flex;
