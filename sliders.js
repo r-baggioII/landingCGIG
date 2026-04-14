@@ -41,34 +41,85 @@ document.addEventListener('DOMContentLoaded', () => {
   const pmImg1 = document.getElementById('pm-img1');
   const pmImg2 = document.getElementById('pm-img2');
   const cards = document.querySelectorAll('.timeline-card');
+  let activeImageLoadToken = 0;
+
+  function clearModalImage(imgEl) {
+    if (!imgEl) return;
+    imgEl.style.display = 'none';
+    imgEl.src = '';
+  }
+
+  function loadModalImage(imgEl, src, token) {
+    if (!imgEl || !src) {
+      clearModalImage(imgEl);
+      return;
+    }
+
+    // Oculta la imagen actual mientras la nueva termina de cargar.
+    imgEl.style.display = 'none';
+
+    const preloader = new Image();
+    preloader.onload = () => {
+      if (token !== activeImageLoadToken) return;
+      imgEl.src = src;
+      imgEl.style.display = 'block';
+    };
+
+    preloader.onerror = () => {
+      if (token !== activeImageLoadToken) return;
+      clearModalImage(imgEl);
+    };
+
+    preloader.src = src;
+  }
 
   if (modalOverlay) {
     cards.forEach(card => {
       card.addEventListener('click', () => {
         const titleEl = card.querySelector('.timeline-card__title');
         const descEl = card.querySelector('.timeline-card__desc');
+        const projectTitle = titleEl?.textContent?.trim() || '';
         
         if (titleEl) pmTitle.textContent = titleEl.textContent;
         if (descEl) pmDesc.textContent = descEl.textContent;
         
         const img1Src = card.getAttribute('data-img1');
         const img2Src = card.getAttribute('data-img2');
-        
-        if (img1Src) {
-            pmImg1.src = img1Src;
-            pmImg1.style.display = 'block';
-        } else {
-            pmImg1.style.display = 'none';
-            pmImg1.src = '';
+        activeImageLoadToken += 1;
+        const currentToken = activeImageLoadToken;
+
+        // Reset visual overrides before applying project-specific adjustments
+        pmImg1.style.objectFit = 'cover';
+        pmImg2.style.objectFit = 'cover';
+        pmImg1.style.backgroundColor = 'transparent';
+        pmImg2.style.backgroundColor = 'transparent';
+
+        // Ajuste puntual de encuadre para Hub de Innovación dentro del mismo cuadro
+        pmImg1.style.objectPosition = projectTitle === 'Hub de Innovación' ? 'center 35%' : 'center';
+        pmImg2.style.objectPosition = 'center';
+
+        // En Contención 360° y Mirada Glocal, bajamos un poco el encuadre de la primera imagen.
+        if (projectTitle === 'Contención 360°' && img1Src?.includes('contencionA.jpeg')) {
+          pmImg1.style.objectPosition = 'center 75%';
+        }
+
+        if (projectTitle === 'Mirada Glocal' && img1Src?.includes('miradaGlocal1.png')) {
+          pmImg1.style.objectPosition = 'center 75%';
+        }
+
+        // En Acción del Sur Blockchain, priorizamos el lateral izquierdo de la imagen B2.
+        if (projectTitle === 'Acción del Sur Blockchain' && img2Src?.includes('accionDelSurB2.png')) {
+          pmImg2.style.objectPosition = 'left center';
+        }
+
+        // En Armar Hogar (imagen institucional), mostrar completa para que entren todos los logos
+        if (projectTitle === 'Armar Hogar + Block Design' && img2Src?.includes('Presentación institucional CGIC - Armar Hogar.jpg')) {
+          pmImg2.style.objectFit = 'contain';
+          pmImg2.style.backgroundColor = 'rgba(10, 14, 26, 0.35)';
         }
         
-        if (img2Src) {
-            pmImg2.src = img2Src;
-            pmImg2.style.display = 'block';
-        } else {
-            pmImg2.style.display = 'none';
-            pmImg2.src = '';
-        }
+        loadModalImage(pmImg1, img1Src, currentToken);
+        loadModalImage(pmImg2, img2Src, currentToken);
         
         modalOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
@@ -76,8 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const closeModal = () => {
+      activeImageLoadToken += 1;
       modalOverlay.classList.remove('active');
       document.body.style.overflow = '';
+      clearModalImage(pmImg1);
+      clearModalImage(pmImg2);
     };
 
     if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);

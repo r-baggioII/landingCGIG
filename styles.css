@@ -752,6 +752,74 @@ h1,h2,h3,h4,h5,h6 {
   line-height:1.65;
 }
 
+/* Interactive values: icon-first, reveal on press */
+#valores .value-card {
+  padding: var(--space-xs);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  min-height: 420px;
+  height: 420px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#valores .value-card:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+#valores .value-card .value-card__icon--img {
+  width: 170px;
+  height: 170px;
+  margin-bottom: 0;
+}
+
+#valores .value-card__text {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin: 0;
+  transform: translateY(8px);
+  transition: max-height var(--t-base), opacity var(--t-base), transform var(--t-base), margin var(--t-base);
+}
+
+#valores .value-card__title {
+  display: none;
+}
+
+#valores .value-card.is-open {
+  padding: var(--space-md) var(--space-md);
+  background: #fffaf4;
+  border: 1px solid rgba(150,105,62,.28);
+  box-shadow: 0 10px 24px rgba(84,58,31,.18);
+  min-height: 420px;
+  height: 420px;
+  justify-content: flex-start;
+}
+
+#valores .value-card.is-open:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(84,58,31,.22);
+}
+
+#valores .value-card.is-open .value-card__icon--img {
+  margin-bottom: var(--space-sm);
+}
+
+#valores .value-card.is-open .value-card__text {
+  max-height: 320px;
+  opacity: 1;
+  margin-top: 0.1rem;
+  transform: translateY(0);
+}
+
+#valores .value-card:focus-visible {
+  outline: 3px solid rgba(234,88,48,.35);
+  outline-offset: 3px;
+}
+
 /* ---------- Approach phases (compact horizontal) ---------- */
 .approach__phases {
   display:grid;
@@ -1578,6 +1646,42 @@ h1,h2,h3,h4,h5,h6 {
 .image-card__caption { font-size:.82rem; font-weight:500; margin-bottom:.15rem; }
 .image-card__source { font-size:.7rem; opacity:.7; }
 
+/* ---------- Reports horizontal rows ---------- */
+.reports-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 320px);
+  gap: var(--space-sm);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-bottom: .35rem;
+}
+
+.reports-row .image-card {
+  height: 240px;
+  scroll-snap-align: start;
+  border: 1px solid rgba(19, 33, 67, 0.18);
+  box-shadow: 0 10px 24px rgba(4, 9, 24, 0.16);
+}
+
+.reports-row .image-card:hover {
+  box-shadow: 0 16px 34px rgba(4, 9, 24, 0.24);
+}
+
+#informes-gestion .section-subtitle {
+  max-width: min(1240px, 96%);
+}
+
+.report-project-logo {
+  display: block;
+  height: 270px;
+  width: auto;
+  max-width: min(1000px, 100vw);
+  object-fit: contain;
+  margin-bottom: var(--space-sm);
+}
+
 /* ---------- Scroll Reveal ---------- */
 .reveal { opacity:0; transform:translateY(25px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
 .reveal.visible { opacity:1; transform:translateY(0); }
@@ -1744,6 +1848,7 @@ h1,h2,h3,h4,h5,h6 {
   .footer__inner              { grid-template-columns:1fr; }
   .footer__bottom             { flex-direction:column; gap:var(--space-xs); text-align:center; }
   .images-grid                { grid-template-columns:1fr; }
+  .reports-row                { grid-auto-columns:minmax(230px, 82vw); }
   .image-card                 { height:220px; }
   .contact-grid               { grid-template-columns:1fr; }
   .achievement                { grid-template-columns:1fr; }
@@ -2092,7 +2197,7 @@ h1,h2,h3,h4,h5,h6 {
 .lightbox {
   display: none;
   position: fixed;
-  z-index: 2000;
+  z-index: 12000;
   padding-top: 60px;
   left: 0;
   top: 0;

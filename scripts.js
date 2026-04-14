@@ -78,6 +78,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealEls.forEach(el => revealObs.observe(el));
 
+  // ── Values interactive cards (index) ──
+  const valueCards = document.querySelectorAll('#valores .value-card');
+  if (valueCards.length) {
+    valueCards.forEach(card => {
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-expanded', 'false');
+
+      const toggleCard = () => {
+        const wasOpen = card.classList.contains('is-open');
+
+        valueCards.forEach(other => {
+          other.classList.remove('is-open');
+          other.setAttribute('aria-expanded', 'false');
+        });
+
+        if (!wasOpen) {
+          card.classList.add('is-open');
+          card.setAttribute('aria-expanded', 'true');
+        }
+      };
+
+      card.addEventListener('click', toggleCard);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleCard();
+        }
+      });
+    });
+  }
+
   // ── Animated counters ──
   const counts = document.querySelectorAll('.count-up');
 
@@ -253,8 +285,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxClose = document.querySelector('.lightbox__close');
 
   if (lightbox && lightboxImg) {
-    document.querySelectorAll('.timeline__gallery img').forEach(img => {
+    document.querySelectorAll('.timeline__gallery img, .project-modal__images img').forEach(img => {
       img.addEventListener('click', () => {
+        if (!img.src) return;
         lightbox.classList.add('show');
         lightboxImg.src = img.src;
       });
