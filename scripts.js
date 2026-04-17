@@ -7,9 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Preloader ──
   const preloader = document.querySelector('.preloader');
-  const dismiss = () => setTimeout(() => preloader?.classList.add('hidden'), 300);
-  window.addEventListener('load', dismiss);
-  if (document.readyState === 'complete') dismiss();
+  let preloaderDismissed = false;
+
+  const dismiss = (delay = 0) => {
+    if (preloaderDismissed) return;
+    preloaderDismissed = true;
+    setTimeout(() => preloader?.classList.add('hidden'), delay);
+  };
+
+  // Mejora de percepción: ocultamos el preloader cuando el DOM ya es interactivo.
+  requestAnimationFrame(() => dismiss(120));
+  // Fallback por si el primer frame tarda.
+  setTimeout(() => dismiss(250), 600);
+  // Respaldo para navegadores/dispositivos lentos.
+  window.addEventListener('load', () => dismiss(0), { once: true });
 
   // ── Navbar scroll ──
   const navbar = document.getElementById('navbar');
@@ -144,6 +155,55 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   btt?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ── Prefetch de navegación interna ──
+  const prefetchedUrls = new Set();
+
+  function prefetchPage(url) {
+    if (!url || prefetchedUrls.has(url)) return;
+
+    const isSameOrigin = url.origin === window.location.origin;
+    const isHtml = url.pathname.endsWith('.html') || url.pathname === '/' || /\/$/.test(url.pathname);
+    if (!isSameOrigin || !isHtml || url.pathname === window.location.pathname) return;
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = url.href;
+    document.head.appendChild(link);
+    prefetchedUrls.add(url.href);
+  }
+
+  document.querySelectorAll('a[href]').forEach(anchor => {
+    const rawHref = anchor.getAttribute('href');
+    if (!rawHref || rawHref.startsWith('#')) return;
+
+    let targetUrl;
+    try {
+      targetUrl = new URL(rawHref, window.location.href);
+    } catch {
+      return;
+    }
+
+    const prefetch = () => prefetchPage(targetUrl);
+    anchor.addEventListener('mouseenter', prefetch, { passive: true, once: true });
+    anchor.addEventListener('focus', prefetch, { passive: true, once: true });
+    anchor.addEventListener('touchstart', prefetch, { passive: true, once: true });
+  });
+
+  // Carga anticipada suave de las páginas principales durante idle time.
+  const navCandidates = ['index.html', 'proyectos.html', 'equipo.html', 'trayectoria.html'];
+  const prefetchMainNav = () => {
+    navCandidates.forEach(path => {
+      prefetchPage(new URL(path, window.location.origin + window.location.pathname));
+    });
+  };
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(prefetchMainNav, { timeout: 2000 });
+  } else {
+    setTimeout(prefetchMainNav, 1200);
+  }
 
   // ── WhatsApp floating button ──
   if (!document.querySelector('.whatsapp-float')) {

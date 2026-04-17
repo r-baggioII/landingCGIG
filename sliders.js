@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pmImages = document.getElementById('pm-images');
   const cards = document.querySelectorAll('.timeline-card');
   let activeImageLoadToken = 0;
+  const warmedImageSrc = new Set();
 
   function clearModalImage(imgEl) {
     if (!imgEl) return;
@@ -93,27 +94,41 @@ document.addEventListener('DOMContentLoaded', () => {
     pmImages.classList.toggle('is-loading', isLoading);
   }
 
-  // Precarga en segundo plano para que la apertura del modal sea más rápida.
-  const warmupModalImages = () => {
-    const uniqueSources = new Set();
-    cards.forEach(card => {
-      const src1 = card.getAttribute('data-img1');
-      const src2 = card.getAttribute('data-img2');
-      if (src1) uniqueSources.add(src1);
-      if (src2) uniqueSources.add(src2);
+  function warmupSingleImage(src) {
+    if (!src || warmedImageSrc.has(src)) return;
+    warmedImageSrc.add(src);
+
+    const img = new Image();
+    img.decoding = 'async';
+    img.src = src;
+  }
+
+  function warmupCardImages(card) {
+    if (!card) return;
+    warmupSingleImage(card.getAttribute('data-img1'));
+    warmupSingleImage(card.getAttribute('data-img2'));
+  }
+
+  // Precarga inteligente: sólo tarjetas cercanas o con intención del usuario.
+  cards.forEach(card => {
+    const warmup = () => warmupCardImages(card);
+    card.addEventListener('mouseenter', warmup, { passive: true, once: true });
+    card.addEventListener('focusin', warmup, { passive: true, once: true });
+    card.addEventListener('touchstart', warmup, { passive: true, once: true });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const warmupObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        warmupCardImages(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, {
+      rootMargin: '250px 0px'
     });
 
-    uniqueSources.forEach(src => {
-      const img = new Image();
-      img.decoding = 'async';
-      img.src = src;
-    });
-  };
-
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(warmupModalImages, { timeout: 1500 });
-  } else {
-    setTimeout(warmupModalImages, 600);
+    cards.forEach(card => warmupObserver.observe(card));
   }
 
   if (modalOverlay) {
@@ -153,6 +168,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (projectTitle === 'Mirada Glocal' && img1Src?.includes('miradaGlocal1.png')) {
           pmImg1.style.objectPosition = 'center 75%';
+        }
+
+        // En Termómetro Territorial, subimos el encuadre de la segunda imagen para mostrar mejor el rostro.
+        if (projectTitle === 'Termómetro Territorial' && img2Src?.includes('termometro2.jpg')) {
+          pmImg2.style.objectPosition = 'center 12%';
+        }
+
+        // En Acción del Sur, subimos el encuadre de la segunda imagen.
+        if (projectTitle === 'Acción del Sur' && img2Src?.includes('accion2.jpg')) {
+          pmImg2.style.objectPosition = 'center 24%';
         }
 
         // En Acción del Sur Blockchain, priorizamos el lateral izquierdo de la imagen B2.
