@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // En Armar Hogar (imagen institucional), mostrar completa para que entren todos los logos
-        if (projectTitle === 'Armar Hogar + Block Design' && img1Src?.includes('Presentación institucional CGIC - Armar Hogar.jpg')) {
+        if (projectTitle === 'Armar Hogar + Block Design' && img1Src?.includes('presentacion-institucional-cgic-armar-hogar.jpg')) {
           pmImg1.style.objectFit = 'contain';
           pmImg1.style.backgroundColor = 'rgba(10, 14, 26, 0.35)';
         }
